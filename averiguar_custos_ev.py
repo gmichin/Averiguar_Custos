@@ -5,7 +5,7 @@ from pathlib import Path
 # Definindo os caminhos dos arquivos
 csv_path = r"C:\Users\win11\Downloads\ev280725.csv"
 xlsx_path = r"Z:\ANDRIELLY\CONTROLE DE NOTAS.xlsx"
-output_path = str(Path.home() / "Downloads" / "Averiguar_Custos.xlsx")
+output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
 df_csv = pd.read_csv(csv_path, sep=';', header=2, encoding='latin1')
