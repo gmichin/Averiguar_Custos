@@ -39,7 +39,7 @@ produtos_verificar_nao_encontrados = {
     '1106': 9.34, '1105': 9.72
 }
 
-# Juntando todos os valores de referência para a coluna adicional
+# Juntando todos os valores de referência
 todos_valores_referencia = {**produtos_especiais_originais, **produtos_verificar_nao_encontrados}
 
 # Lendo e preparando o arquivo XLSX
@@ -115,11 +115,12 @@ for idx in result[mask_nao_encontrados_verificar].index:
         result.at[idx, 'COMPARACAO'] = 'MENOR'
 
 # Criando as tabelas finais
-tabela1 = result[result['STATUS'] == 'IGUAL'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'CUSTO UNITÁRIO', 'DATA']]
-tabela1.columns = ['Código', 'Descrição', 'Custo Estoque', 'Custo Nota', 'Data Nota']
+# Mantendo VALOR_REFERENCIA em todas as abas para produtos especiais originais
+tabela1 = result[result['STATUS'] == 'IGUAL'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'VALOR_REFERENCIA', 'CUSTO UNITÁRIO', 'DATA']]
+tabela1.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Custo Nota', 'Data Nota']
 
-tabela2 = result[result['STATUS'] == 'DIFERENTE'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'CUSTO UNITÁRIO', 'DATA']]
-tabela2.columns = ['Código', 'Descrição', 'Custo Estoque', 'Custo Nota', 'Data Nota']
+tabela2 = result[result['STATUS'] == 'DIFERENTE'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'VALOR_REFERENCIA', 'CUSTO UNITÁRIO', 'DATA']]
+tabela2.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Custo Nota', 'Data Nota']
 
 tabela3 = result[result['STATUS'] == 'NÃO ENCONTRADO'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'VALOR_REFERENCIA', 'COMPARACAO']]
 tabela3.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Comparação']
