@@ -3,14 +3,44 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\Downloads\ev280725.csv"
+csv_path = r"C:\Users\win11\Downloads\ev300725.csv"
 xlsx_path = r"Z:\ANDRIELLY\CONTROLE DE NOTAS.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
 df_csv = pd.read_csv(csv_path, sep=';', header=2, encoding='latin1')
 df_csv.columns = ['PRODUTO', 'DESCRICAO', 'GRUPO', 'PCS', 'KGS', 'CUSTO', 'TOTAL']
-df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='coerce')  # Convertendo para numérico
+df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='coerce')
+
+# Lista de produtos com valores de referência especiais (originais)
+produtos_especiais_originais = {
+    '700': 25.9, '845': 15.97, '809': 15.97, '1452': 15.97, '1446': 14.65,
+    '755': 14.65, '848': 14.65, '1433': 14.65, '1448': 8.28, '817': 8.28,
+    '849': 8.28, '1430': 8.28, '846': 18.04, '878': 18.04, '1432': 18.04,
+    '1451': 18.04, '1426': 5.14, '1447': 5.14, '850': 5.14, '746': 5.14,
+    '1427': 3.75, '836': 3.75, '852': 3.75, '1450': 3.75, '1425': 8.45,
+    '750': 8.45, '851': 14.93, '1449': 14.93, '1429': 14.93, '748': 14.93
+}
+
+# Lista de produtos para verificação em "Não Encontrados"
+produtos_verificar_nao_encontrados = {
+    '1721': 11.8, '1844': 23.43, '1833': 19.5, '1639': 20.55, '1766': 23.2,
+    '1767': 9.45, '1690': 15.25, '1707': 1.99, '1567': 10, '1816': 11.98,
+    '1856': 12, '1720': 24.33, '1428': 18.33, '1817': 13, '1221': 12.9,
+    '1177': 13, '1750': 3.83, '1484': 19.76, '1788': 18.36, '1814': 17.55,
+    '1179': 17, '1354': 16, '1673': 25.7, '1795': 29.36, '1546': 10.33,
+    '1774': 11.65, '1881': 14.7, '1211': 42.43, '1713': 19.99, '1131': 42.26,
+    '1893': 30.9, '1691': 9.1, '807': 16.80, '1667': 6.98, '1873': 7.9,
+    '1752': 18.88, '1819': 38.2, '1806': 29, '1597': 3.9, '1675': 6,
+    '1358': 5.5, '1510': 10.4, '1781': 11.49, '1711': 35, '1796': 7.25,
+    '1420': 14.3, '1793': 3, '1547': 40, '1575': 20.83, '1828': 24.69,
+    '1826': 24.98, '1116': 23.06, '1705': 22.15, '1759': 10, '1496': 34.95,
+    '1500': 34.95, '1717': 8.75, '1621': 8.42, '1624': 1.94, '822': 13.69,
+    '1106': 9.34, '1105': 9.72
+}
+
+# Juntando todos os valores de referência para a coluna adicional
+todos_valores_referencia = {**produtos_especiais_originais, **produtos_verificar_nao_encontrados}
 
 # Lendo e preparando o arquivo XLSX
 xls = pd.ExcelFile(xlsx_path)
@@ -20,11 +50,9 @@ for sheet in xls.sheet_names:
     df_sheet = pd.read_excel(xls, sheet_name=sheet)
     df_sheet.columns = [col.upper().strip() for col in df_sheet.columns]
     
-    # Padronizando nome da coluna de custo
     if 'NEGOCIADO' in df_sheet.columns and 'CUSTO UNITÁRIO' not in df_sheet.columns:
         df_sheet = df_sheet.rename(columns={'NEGOCIADO': 'CUSTO UNITÁRIO'})
     
-    # Convertendo valores para numérico
     if 'CUSTO UNITÁRIO' in df_sheet.columns:
         df_sheet['CUSTO UNITÁRIO'] = pd.to_numeric(df_sheet['CUSTO UNITÁRIO'], errors='coerce')
     
@@ -38,8 +66,15 @@ df_xlsx_all = df_xlsx_all.sort_values('DATA', ascending=False)
 df_xlsx_unique = df_xlsx_all.drop_duplicates(subset=['PRODUTO'], keep='first')
 
 # Juntando os dataframes
-result = pd.merge(df_csv, df_xlsx_unique[['PRODUTO', 'CUSTO UNITÁRIO', 'DATA']], 
-                 on='PRODUTO', how='left')
+result = pd.merge(
+    df_csv, 
+    df_xlsx_unique[['PRODUTO', 'CUSTO UNITÁRIO', 'DATA']], 
+    on='PRODUTO', 
+    how='left'
+)
+
+# Adicionando coluna com todos os valores de referência
+result['VALOR_REFERENCIA'] = result['PRODUTO'].astype(str).map(todos_valores_referencia)
 
 # Definindo tolerância para comparação
 TOLERANCIA = 0.01  # 1% de diferença
@@ -49,6 +84,36 @@ result['STATUS'] = 'NÃO ENCONTRADO'
 result.loc[~result['CUSTO UNITÁRIO'].isna(), 'STATUS'] = 'DIFERENTE'
 result.loc[np.isclose(result['CUSTO'], result['CUSTO UNITÁRIO'], rtol=TOLERANCIA, equal_nan=True), 'STATUS'] = 'IGUAL'
 
+# Classificação especial para produtos especiais originais
+for produto, valor_ref in produtos_especiais_originais.items():
+    mask = result['PRODUTO'].astype(str) == produto
+    if any(mask):
+        if result.loc[mask, 'CUSTO'].iloc[0] >= valor_ref:
+            result.loc[mask, 'STATUS'] = 'IGUAL'
+        else:
+            result.loc[mask, 'STATUS'] = 'DIFERENTE'
+
+# Adicionando coluna de COMPARAÇÃO apenas para produtos não encontrados que estão na lista de verificação
+result['COMPARACAO'] = ''
+mask_nao_encontrados_verificar = (
+    (result['STATUS'] == 'NÃO ENCONTRADO') & 
+    (result['PRODUTO'].astype(str).isin(produtos_verificar_nao_encontrados.keys()))
+)
+
+for idx in result[mask_nao_encontrados_verificar].index:
+    custo = result.at[idx, 'CUSTO']
+    valor_ref = result.at[idx, 'VALOR_REFERENCIA']
+    
+    if pd.isna(custo) or pd.isna(valor_ref):
+        continue
+    
+    if np.isclose(custo, valor_ref, rtol=0.01):
+        result.at[idx, 'COMPARACAO'] = 'IGUAL'
+    elif custo > valor_ref:
+        result.at[idx, 'COMPARACAO'] = 'MAIOR'
+    else:
+        result.at[idx, 'COMPARACAO'] = 'MENOR'
+
 # Criando as tabelas finais
 tabela1 = result[result['STATUS'] == 'IGUAL'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'CUSTO UNITÁRIO', 'DATA']]
 tabela1.columns = ['Código', 'Descrição', 'Custo Estoque', 'Custo Nota', 'Data Nota']
@@ -56,8 +121,8 @@ tabela1.columns = ['Código', 'Descrição', 'Custo Estoque', 'Custo Nota', 'Dat
 tabela2 = result[result['STATUS'] == 'DIFERENTE'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'CUSTO UNITÁRIO', 'DATA']]
 tabela2.columns = ['Código', 'Descrição', 'Custo Estoque', 'Custo Nota', 'Data Nota']
 
-tabela3 = result[result['STATUS'] == 'NÃO ENCONTRADO'][['PRODUTO', 'DESCRICAO', 'CUSTO']]
-tabela3.columns = ['Código', 'Descrição', 'Custo Estoque']
+tabela3 = result[result['STATUS'] == 'NÃO ENCONTRADO'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'VALOR_REFERENCIA', 'COMPARACAO']]
+tabela3.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Comparação']
 
 # Salvando os resultados
 with pd.ExcelWriter(output_path) as writer:
