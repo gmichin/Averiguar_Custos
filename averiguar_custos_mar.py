@@ -8,14 +8,15 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 
 # Caminhos dos arquivos
-custo_path = r"C:\Users\win11\Downloads\Custos de produtos - Julho.xlsx"
-margem_path = r"C:\Users\win11\OneDrive\Documentos\Margens de fechamento\Margem_250731 - Fechamento - wapp.xlsx"
+custo_path = r"C:\Users\win11\Downloads\Custos de produtos - Agosto.xlsx"
+margem_path = r"C:\Users\win11\Downloads\Margem_250804 - wapp.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (MAR x CUS).xlsx")
 
 def load_data(file_path, file_type):
     try:
         if file_type == 'custo':
-            df = pd.read_excel(file_path, header=0)
+            # Tentar ler a aba "Base" (pode ser a única ou uma entre várias)
+            df = pd.read_excel(file_path, sheet_name="Base", header=0)
             df = df[['DATA', 'PRODUTO', 'DESCRICAO', 'CUSTO']].copy()
             # Converter para string removendo .0 de números e espaços
             df['PRODUTO'] = df['PRODUTO'].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
