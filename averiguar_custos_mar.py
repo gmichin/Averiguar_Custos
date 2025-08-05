@@ -17,7 +17,8 @@ def load_data(file_path, file_type):
         if file_type == 'custo':
             df = pd.read_excel(file_path, header=0)
             df = df[['DATA', 'PRODUTO', 'DESCRICAO', 'CUSTO']].copy()
-            df['PRODUTO'] = df['PRODUTO'].astype(str).str.strip()
+            # Converter para string removendo .0 de números e espaços
+            df['PRODUTO'] = df['PRODUTO'].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
             df['DATA'] = pd.to_datetime(df['DATA'], dayfirst=True).dt.date
             df['CUSTO'] = pd.to_numeric(
                 df['CUSTO'].astype(str).str.replace(',', '.'), 
@@ -28,29 +29,18 @@ def load_data(file_path, file_type):
         elif file_type == 'margem':
             df = pd.read_excel(margem_path, sheet_name="Base (3,5%)", header=8)
             
-            print("\nDEBUG - Colunas disponíveis na margem:")
-            print(df.columns.tolist())
+            # Filtrar apenas CF='ESP' (ou outros valores relevantes)
+            df = df[df['CF'] == 'ESP'].copy()
             
-            # Verificar se a coluna CF existe e contém dados
-            if 'CF' not in df.columns:
-                raise ValueError("Coluna CF não encontrada na planilha de margem")
+            # Converter para string removendo .0 de números e espaços
+            df['CODPRODUTO'] = df['CODPRODUTO'].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
             
-            print("\nDEBUG - Valores únicos na coluna CF:")
-            print(df['CF'].unique())
-            
-            # Manter o valor original de CF (texto) em vez de converter para numérico
             df = df[['CODPRODUTO', 'DATA', 'DESCRICAO', 'CUSTO', 'CF']].copy()
             df.columns = ['PRODUTO', 'DATA', 'DESCRICAO_MARGEM', 'CUSTO_MARGEM', 'CF']
             
-            df['PRODUTO'] = df['PRODUTO'].astype(str).str.strip()
             df['DATA'] = pd.to_datetime(df['DATA'], dayfirst=True).dt.date
             df['CUSTO_MARGEM'] = pd.to_numeric(df['CUSTO_MARGEM'], errors='coerce')
-            
-            # Manter CF como texto
             df['CF'] = df['CF'].astype(str).str.strip()
-            
-            print("\nDEBUG - Amostra dos dados processados:")
-            print(df[['PRODUTO', 'CF', 'CUSTO_MARGEM']].head())
         
         return df.dropna(subset=['PRODUTO', 'DATA'])
     
