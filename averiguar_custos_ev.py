@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2025\Novembro\ev211125.csv"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2025\Novembro\ev241125.csv"
 #"Z:\ANDRIELLY\CONTROLE DE NOTAS.xlsx"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
@@ -28,7 +28,7 @@ produtos_especiais_originais = {
     # Orelha
     '1426': 4.05, '1447': 4.05, '850': 4.05, '746': 4.05,
     # Pé
-    '1427': 3.23, '836': 3.23, '852': 3.43, '1450': 3.23, 
+    '1427': 3.23, '836': 3.23, '852': 3.27, '1450': 3.23, 
     # Ponta
     '1425': 9.84, '750': 8.39, 
     # Rabo
@@ -41,7 +41,7 @@ produtos_verificar_nao_encontrados = {
     '1690': 15.25,'1567': 10, '1816': 11.98, '1766': 23.2,
     '1856': 12, '1720': 24.33, '1817': 13, '1945': 6.99,
     '1177': 13, '1750': 3.83, '1484': 19.76, '1788': 18.36,
-    '1179': 17, '1354': 16, '1673': 25.7, '1795': 30.50, '1546': 10.33,
+    '1179': 17, '1354': 16, '1673': 25.7, '1546': 10.33,
     '1881': 14.7, '1211': 42.43, '1713': 19.99, '1131': 42.26,
     '1893': 30.9, '1691': 9.1, '807': 16.80, '1667': 6.98, '1873': 7.9,
     '1752': 18.88, '1819': 38.2, '1597': 3.9, '1675': 6, '2311': 10.8,
