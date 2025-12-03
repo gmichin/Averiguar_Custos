@@ -3,8 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2025\Dezembro\ev011225.csv"
-#"Z:\ANDRIELLY\CONTROLE DE NOTAS.xlsx"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2025\Dezembro\ev031225.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -15,30 +14,21 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-    # Big bacon
-    '700': 21.22, 
-    # Paleta
-    '845': 16.09, '809': 16.09, '1452': 16.09, '1428': 16.09,
-    # Costela
-    '1446': 13.61, '755': 13.61, '848': 13.61, '1433': 13.61, '1095': 13.61,    
-    # Lingua
-    '1448': 7.34, '817': 7.34, '849': 7.34, '1430': 7.34, 
-    # Lombo
-    '846': 17.91, '878': 17.91, '1432': 17.91, '1451': 17.91, 
-    # Orelha
-    '1426': 4.05, '1447': 4.05, '850': 4.05, '746': 4.05,
-    # Pé
-    '1427': 3.23, '836': 3.23, '852': 3.23, '1450': 3.23, 
-    # Ponta
-    '1425': 9.84, '750': 9.84, 
-    # Rabo
-    '851': 14.27, '1449': 14.27, '1429': 14.27, '748': 14.27
+    '700': 21.22,  # Big bacon
+    '845': 16.09, '809': 16.09, '1452': 16.09, '1428': 16.09,  # Paleta
+    '1446': 13.61, '755': 13.61, '848': 13.61, '1433': 13.61, '1095': 13.61,  # Costela
+    '1448': 7.34, '817': 7.34, '849': 7.34, '1430': 7.34,  # Lingua
+    '846': 17.91, '878': 17.91, '1432': 17.91, '1451': 17.91,  # Lombo
+    '1426': 4.05, '1447': 4.05, '850': 4.04, '746': 4.05,  # Orelha
+    '1427': 3.23, '836': 3.23, '852': 3.23, '1450': 3.23,  # Pé
+    '1425': 9.84, '750': 9.84,  # Ponta
+    '851': 14.27, '1449': 14.27, '1429': 14.27, '748': 14.27  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
 produtos_verificar_nao_encontrados = {
     '1721': 11.8, '1844': 23.43, '1833': 19.5, '1639': 20.55,
-    '1690': 15.25,'1567': 10, '1816': 11.98, '1766': 23.2,
+    '1690': 15.25, '1567': 10, '1816': 11.98, '1766': 23.2,
     '1856': 12, '1720': 24.33, '1817': 13, '1945': 6.99,
     '1177': 13, '1750': 3.83, '1484': 19.76, '1788': 18.36,
     '1179': 17, '1354': 16, '1673': 25.7, '1546': 10.33,
@@ -47,40 +37,100 @@ produtos_verificar_nao_encontrados = {
     '1752': 18.88, '1819': 38.2, '1597': 3.9, '1675': 6, 
     '1510': 10.4, '1781': 11.49, '1711': 35, '1796': 7.25, 
     '1420': 14.3, '1793': 3, '1575': 11.90, '1828': 20.50,
-    '1826': 24.98, '1759': 10, '1496': 34.95,
+    '1826': 24.98, '1759': 10, '1496': 34.95, '2001': 31,
     '1717': 8.75, '1621': 8.42, '822': 13.69, '1624': 1.94,
     '1969': 14.2, '1970': 14.2, '1827': 8.98, '1407': 6,
-    '1434': 16, '1444': 20, '1335':20.5, '1218': 30.5, '198': 17, 
-    '902':  9.9, '1927': 51.30, '1265': 26.30, '1708': 1.99, '1282': 8.9
+    '1434': 16, '1444': 20, '1335': 20.5, '1218': 30.5, '198': 17, 
+    '902': 9.9, '1927': 51.30, '1265': 26.30, '1708': 1.99, '1282': 8.9
 }
 
 # Juntando todos os valores de referência
 todos_valores_referencia = {**produtos_especiais_originais, **produtos_verificar_nao_encontrados}
 
 # Lendo e preparando o arquivo XLSX
+print("Lendo arquivo XLSX...")
 xls = pd.ExcelFile(xlsx_path)
-df_xlsx_all = pd.DataFrame()
+df_xlsx_all = []
+
+# Colunas que realmente precisamos
+colunas_desejadas = ['PRODUTO', 'CUSTO UNITÁRIO', 'NEGOCIADO', 'DATA']
 
 for sheet in xls.sheet_names:
-    df_sheet = pd.read_excel(xls, sheet_name=sheet)
-    df_sheet.columns = [col.upper().strip() for col in df_sheet.columns]
+    print(f"Processando aba: {sheet}")
     
-    if 'NEGOCIADO' in df_sheet.columns and 'CUSTO UNITÁRIO' not in df_sheet.columns:
-        df_sheet = df_sheet.rename(columns={'NEGOCIADO': 'CUSTO UNITÁRIO'})
-    
-    if 'CUSTO UNITÁRIO' in df_sheet.columns:
+    try:
+        # Ler apenas algumas linhas primeiro para verificar as colunas
+        df_sample = pd.read_excel(xls, sheet_name=sheet, nrows=10)
+        df_sample.columns = [str(col).upper().strip() for col in df_sample.columns]
+        
+        # Verificar quais colunas estão presentes
+        colunas_presentes = [col for col in colunas_desejadas if any(col in col_name for col_name in df_sample.columns)]
+        
+        if not colunas_presentes:
+            print(f"  Aviso: Nenhuma coluna relevante encontrada na aba {sheet}")
+            continue
+        
+        # Ler a aba inteira, mas apenas as colunas necessárias
+        df_sheet = pd.read_excel(xls, sheet_name=sheet, usecols=lambda x: any(col in str(x).upper() for col in colunas_desejadas))
+        df_sheet.columns = [str(col).upper().strip() for col in df_sheet.columns]
+        
+        # Renomear colunas se necessário
+        for col in df_sheet.columns:
+            if 'NEGOCIADO' in col and 'CUSTO UNITÁRIO' not in df_sheet.columns:
+                df_sheet = df_sheet.rename(columns={col: 'CUSTO UNITÁRIO'})
+                break
+        
+        # Garantir que temos as colunas necessárias
+        if 'PRODUTO' not in df_sheet.columns:
+            print(f"  Aviso: Coluna 'PRODUTO' não encontrada na aba {sheet}")
+            continue
+        
+        if 'CUSTO UNITÁRIO' not in df_sheet.columns:
+            print(f"  Aviso: Coluna 'CUSTO UNITÁRIO' não encontrada na aba {sheet}")
+            continue
+        
+        # Converter tipos de dados
+        df_sheet['PRODUTO'] = pd.to_numeric(df_sheet['PRODUTO'], errors='coerce').astype('Int64')
         df_sheet['CUSTO UNITÁRIO'] = pd.to_numeric(df_sheet['CUSTO UNITÁRIO'], errors='coerce')
+        
+        # Processar data se existir
+        if 'DATA' in df_sheet.columns:
+            df_sheet['DATA'] = pd.to_datetime(df_sheet['DATA'], dayfirst=True, errors='coerce')
+            df_sheet['DATA'] = df_sheet['DATA'].dt.date
+        
+        # Manter apenas colunas essenciais
+        colunas_manter = ['PRODUTO', 'CUSTO UNITÁRIO']
+        if 'DATA' in df_sheet.columns:
+            colunas_manter.append('DATA')
+        
+        df_sheet = df_sheet[colunas_manter]
+        df_xlsx_all.append(df_sheet)
+        
+        print(f"  Processado: {len(df_sheet)} linhas")
+        
+    except Exception as e:
+        print(f"  Erro ao processar aba {sheet}: {str(e)}")
+        continue
+
+# Concatenar todos os dataframes
+if df_xlsx_all:
+    df_xlsx_all = pd.concat(df_xlsx_all, ignore_index=True)
+    print(f"Total de registros lidos do XLSX: {len(df_xlsx_all)}")
     
-    df_xlsx_all = pd.concat([df_xlsx_all, df_sheet], ignore_index=True)
-
-# Processando as datas e ordenando
-df_xlsx_all['DATA'] = pd.to_datetime(df_xlsx_all['DATA'], dayfirst=True, errors='coerce').dt.date
-df_xlsx_all = df_xlsx_all.sort_values('DATA', ascending=False)
-
-# Mantendo apenas o registro mais recente de cada produto
-df_xlsx_unique = df_xlsx_all.drop_duplicates(subset=['PRODUTO'], keep='first')
+    # Ordenar por data (se existir) e remover duplicados mantendo o mais recente
+    if 'DATA' in df_xlsx_all.columns:
+        df_xlsx_all = df_xlsx_all.sort_values('DATA', ascending=False)
+        df_xlsx_unique = df_xlsx_all.drop_duplicates(subset=['PRODUTO'], keep='first')
+    else:
+        df_xlsx_unique = df_xlsx_all.drop_duplicates(subset=['PRODUTO'], keep='first')
+    
+    print(f"Produtos únicos no XLSX: {len(df_xlsx_unique)}")
+else:
+    print("Nenhum dado válido foi lido do arquivo XLSX!")
+    df_xlsx_unique = pd.DataFrame(columns=['PRODUTO', 'CUSTO UNITÁRIO', 'DATA'])
 
 # Juntando os dataframes
+print("Juntando dados...")
 result = pd.merge(
     df_csv, 
     df_xlsx_unique[['PRODUTO', 'CUSTO UNITÁRIO', 'DATA']], 
@@ -89,7 +139,8 @@ result = pd.merge(
 )
 
 # Adicionando coluna com todos os valores de referência
-result['VALOR_REFERENCIA'] = result['PRODUTO'].astype(str).map(todos_valores_referencia)
+result['PRODUTO_STR'] = result['PRODUTO'].astype(str)
+result['VALOR_REFERENCIA'] = result['PRODUTO_STR'].map(todos_valores_referencia)
 
 # Definindo tolerância para comparação
 TOLERANCIA = 0.01  # 1% de diferença
@@ -97,13 +148,17 @@ TOLERANCIA = 0.01  # 1% de diferença
 # Classificando os resultados
 result['STATUS'] = 'NÃO ENCONTRADO'
 result.loc[~result['CUSTO UNITÁRIO'].isna(), 'STATUS'] = 'DIFERENTE'
-result.loc[np.isclose(result['CUSTO'], result['CUSTO UNITÁRIO'], rtol=TOLERANCIA, equal_nan=True), 'STATUS'] = 'IGUAL'
+
+# Verificar se são iguais (dentro da tolerância)
+mask_iguais = ~result['CUSTO UNITÁRIO'].isna() & ~result['CUSTO'].isna()
+result.loc[mask_iguais & np.isclose(result['CUSTO'], result['CUSTO UNITÁRIO'], rtol=TOLERANCIA), 'STATUS'] = 'IGUAL'
 
 # Classificação especial para produtos especiais originais
 for produto, valor_ref in produtos_especiais_originais.items():
-    mask = result['PRODUTO'].astype(str) == produto
+    mask = result['PRODUTO_STR'] == produto
     if any(mask):
-        if result.loc[mask, 'CUSTO'].iloc[0] >= valor_ref:
+        custo_valor = result.loc[mask, 'CUSTO'].iloc[0]
+        if not pd.isna(custo_valor) and custo_valor >= valor_ref:
             result.loc[mask, 'STATUS'] = 'IGUAL'
         else:
             result.loc[mask, 'STATUS'] = 'DIFERENTE'
@@ -112,7 +167,7 @@ for produto, valor_ref in produtos_especiais_originais.items():
 result['COMPARACAO'] = ''
 mask_nao_encontrados_verificar = (
     (result['STATUS'] == 'NÃO ENCONTRADO') & 
-    (result['PRODUTO'].astype(str).isin(produtos_verificar_nao_encontrados.keys()))
+    (result['PRODUTO_STR'].isin(produtos_verificar_nao_encontrados.keys()))
 )
 
 for idx in result[mask_nao_encontrados_verificar].index:
@@ -130,7 +185,8 @@ for idx in result[mask_nao_encontrados_verificar].index:
         result.at[idx, 'COMPARACAO'] = 'MENOR'
 
 # Criando as tabelas finais
-# Mantendo VALOR_REFERENCIA em todas as abas para produtos especiais originais
+print("Criando tabelas finais...")
+
 tabela1 = result[result['STATUS'] == 'IGUAL'][['PRODUTO', 'DESCRICAO', 'CUSTO', 'VALOR_REFERENCIA', 'CUSTO UNITÁRIO', 'DATA']]
 tabela1.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Custo Nota', 'Data Nota']
 
@@ -141,13 +197,15 @@ tabela3 = result[result['STATUS'] == 'NÃO ENCONTRADO'][['PRODUTO', 'DESCRICAO',
 tabela3.columns = ['Código', 'Descrição', 'Custo Estoque', 'Valor Referência', 'Comparação']
 
 # Salvando os resultados
+print("Salvando resultados...")
 with pd.ExcelWriter(output_path) as writer:
     tabela1.to_excel(writer, sheet_name='Custos_Iguais', index=False)
     tabela2.to_excel(writer, sheet_name='Custos_Diferentes', index=False)
     tabela3.to_excel(writer, sheet_name='Produtos_Nao_Encontrados', index=False)
 
-print(f"Relatório gerado com sucesso em: {output_path}")
+print(f"\nRelatório gerado com sucesso em: {output_path}")
 print("\nResumo:")
 print(f"Produtos com custos iguais: {len(tabela1)}")
 print(f"Produtos com custos diferentes: {len(tabela2)}")
 print(f"Produtos não encontrados: {len(tabela3)}")
+print(f"Total de produtos processados: {len(result)}")
