@@ -9,7 +9,7 @@ pd.set_option('display.width', 1000)
 
 # Caminhos dos arquivos
 custo_path = r"C:\Users\win11\Downloads\Custos de produtos - Dezembro.xlsx"
-margem_path = r"C:\Users\win11\Downloads\MRG_251203 - wapp.xlsx"
+margem_path = r"C:\Users\win11\Downloads\MRG_251204 - wapp.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (MAR x CUS).xlsx")
 
 def load_data(file_path, file_type):
