@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2025\Dezembro\ev181225.csv"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Janeiro\ev060126.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -14,15 +14,15 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-    '700': 21.82,  # Big bacon
-    '845': 15.29, '809': 14.9, '1452': 16.09, '1428': 16.09,  # Paleta
-    '1446': 13.61, '755': 11.97, '848': 12.34, '1433': 13.61, '1095': 14.54,  # Costela
-    '1448': 7.34, '817': 6.82, '849': 7.28, '1430': 7.34,  # Lingua
-    '846': 15.09, '878': 15.94, '1432': 17.91, '1451': 17.91,  # Lombo  
-    '1426': 4.05, '1447': 4.05, '850': 4, '746': 4,  # Orelha
-    '1427': 3.23, '836': 2.14, '852': 2.82, '1450': 3.23,  # Pé
-    '1425': 9.84, '750': 8.32,  # Ponta
-    '851': 11, '1449': 14.27, '1429': 14.27, '748': 11.16  # Rabo
+    '700': 21.35,  # Big bacon
+    '845': 15.43, '809': 15.43, '1452': 15.43, '1428': 15.43,  # Paleta
+    '1446': 14.10, '755': 14.10, '848': 14.10, '1433': 14.10, '1095': 14.10,  # Costela
+    '1448': 7.9, '817': 7.9, '849': 7.9, '1430': 7.9,  # Lingua
+    '846': 17.91, '878': 17.91, '1432': 17.91, '1451': 17.91,  # Lombo  
+    '1426': 4.05, '1447': 4.05, '850': 4.05, '746': 4.05,  # Orelha
+    '1427': 2.91, '836': 2.91, '852': 2.91, '1450': 2.91,  # Pé
+    '1425': 9.68, '750': 9.68,  # Ponta
+    '851': 14.26, '1449': 14.26, '1429': 14.26, '748': 14.26  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -38,7 +38,7 @@ produtos_verificar_nao_encontrados = {
     '1510': 10.4, '1781': 11.49, '1711': 35, '1796': 7.25, 
     '1420': 14.3, '1793': 3, '1575': 11.90, '1828': 20.50,
     '1826': 24.98, '1759': 10, '1496': 35.9, '1909': 19,
-    '1717': 8.75, '1621': 8.42, '822': 13.69,
+    '1717': 8.75, '1621': 8.42, '822': 13.69, '2017': 26,
     '1969': 14.2, '1970': 14.2, '1827': 8.98, '1407': 6,
     '1434': 16, '1444': 20, '1335': 20.5, '1218': 30.5, '198': 17, 
     '902': 9.9, '1927': 51.30, '1265': 26.30, '1708': 1.99, '1282': 8.9
