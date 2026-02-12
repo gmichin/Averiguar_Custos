@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Fevereiro\ev090226.csv"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Fevereiro\ev120226.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -17,7 +17,7 @@ produtos_especiais_originais = {
     '700': 21.13,  # Big bacon
     '845': 16.03, '809': 16.03, '1452': 16.03, '1428': 16.03,  # Paleta
     '1446': 13.26, '755': 13.26, '848': 13.26, '1433': 13.26, '1095': 13.26,  # Costela
-    '1448': 7.89, '817': 7.49 , '849': 7.86, '1430': 7.89,  # Lingua
+    '1448': 7.89, '817': 7.24 , '849': 7.86, '1430': 7.89,  # Lingua
     '846': 17.81, '878': 17.81, '1432': 17.81, '1451': 17.81,  # Lombo  
     '1426': 3.68, '1447': 3.68, '850': 3.68, '746': 3.68,  # Orelha
     '1427': 2.77, '836': 2.77, '852': 2.77, '1450': 2.77,  # Pé
