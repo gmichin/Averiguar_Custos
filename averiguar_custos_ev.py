@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Março\ev100326.csv"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Março\ev110326.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -16,13 +16,13 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 produtos_especiais_originais = {
     '700': 21.20,  # Big bacon
     '845': 16.08, '809': 16.08, '1452': 16.08, '1428': 16.08,  # Paleta
-    '1446': 13.20, '755': 13.20, '848': 13.20, '1433': 13.20, '1095': 13.17,  # Costela
+    '1446': 11.65, '755': 14.38, '848': 13.20, '1433': 13.20, '1095': 13.17,  # Costela
     '1448': 7.91, '817': 7.91 , '849': 7.91, '1430': 7.91,  # Lingua
-    '846': 17.90, '878': 17.86, '1432': 17.90, '1451': 17.90,  # Lombo  
-    '1426': 3.68, '1447': 3.68, '850': 3.66, '746': 3.68,  # Orelha
-    '1427': 2.52, '836': 2.52, '852': 2.52, '1450': 2.52,  # Pé
-    '1425': 9.84, '750': 9.84,  # Ponta
-    '851': 13.17, '1449': 13.17, '1429': 13.17, '748': 13.17  # Rabo
+    '846': 17.90, '878': 17.64, '1432': 17.90, '1451': 17.90,  # Lombo  
+    '1426': 3.74, '1447': 3.78, '850': 3.66, '746': 3.79,  # Orelha
+    '1427': 2.52, '836': 3.69, '852': 2.44, '1450': 2.52,  # Pé
+    '1425': 9.84, '750': 8.63,  # Ponta
+    '851': 13.29, '1449': 13.17, '1429': 13.17, '748': 13.17  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
