@@ -8,8 +8,8 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 
 # Caminhos dos arquivos
-custo_path = r"C:\Users\win11\Downloads\Custos de produtos - Março.xlsx"
-margem_path = r"C:\Users\win11\Downloads\260330_MRG - wapp.xlsx"
+custo_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Custos de produtos - Março.xlsx"
+margem_path = r"C:\Users\win11\Downloads\260331_MRG - wapp - v3.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (MAR x CUS).xlsx")
 
 def load_data(file_path, file_type):
