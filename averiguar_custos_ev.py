@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Abril\ev290426.csv"
-xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO (2).xlsx"
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Maio\ev050526.csv"
+xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO 3.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
@@ -16,13 +16,13 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 produtos_especiais_originais = {
     '700': 22.71,  # Big bacon
     '845': 15.5, '809': 15.5, '1452': 15.71, '1428': 15.71,  # Paleta
-    '1446': 12.93, '755': 11.59, '848': 12.28, '1433': 12.48, '1095': 12.93,  # Costela
+    '1446': 12.93, '755': 11.59, '848': 14.25, '1433': 12.48, '1095': 12.93,  # Costela
     '1448': 7.33, '817': 5.5, '849': 7.33, '1430': 7.33,  # Lingua
-    '846': 17.56, '878': 15.84, '1432': 17.56, '1451': 17.56,  # Lombo  
-    '1426': 3.85, '1447': 3.85, '850': 3.99, '746': 4.2,  # Orelha
-    '1427': 4.56, '836': 4.04, '852': 4.45, '1450': 4.56,  # Pé
+    '846': 14.16, '878': 15.84, '1432': 17.56, '1451': 17.56,  # Lombo  
+    '1426': 3.85, '1447': 3.85, '850': 3.09, '746': 4.2,  # Orelha
+    '1427': 4.56, '836': 4.50, '852': 4.45, '1450': 4.56,  # Pé
     '1425': 9.63, '750': 9.63,  # Ponta
-    '851': 13.18, '1449': 13.18, '1429': 13.18, '748': 11.5  # Rabo
+    '851': 12.48, '1449': 13.18, '1429': 13.18, '748': 11.5  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -47,7 +47,7 @@ produtos_verificar_nao_encontrados = {
     '1039': 4.2, '2087': 26, '1501': 11.7, '3026': 31, '3021': 34.26,
     '2094': 29.9, '3003': 41.9, '3004': 7.21, '3002': 29.9, '7072': 40.52,
     '3097': 2.5, '3098': 4.5, '1669': 7.5, '2056': 5.58, '3016': 3.9, 
-    
+    '2424': 26.99, '2198': 15.5,
 }
 
 # Juntando todos os valores de referência
