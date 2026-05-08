@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Maio\ev060526.csv" 
+csv_path = r"C:\Users\win11\OneDrive\Documentos\Custos Médios\2026\Maio\ev080526.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO 3.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -14,15 +14,15 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-    '700': 22.71,  # Big bacon
-    '845': 15.5, '809': 15.5, '1452': 15.71, '1428': 15.71,  # Paleta
-    '1446': 12.93, '755': 11.59, '848': 14.25, '1433': 12.48, '1095': 12.93,  # Costela
-    '1448': 7.33, '817': 5.5, '849': 7.33, '1430': 7.33,  # Lingua
-    '846': 14.16, '878': 15.84, '1432': 17.56, '1451': 17.56,  # Lombo  
-    '1426': 3.85, '1447': 3.85, '850': 3.09, '746': 4.2,  # Orelha
-    '1427': 4.56, '836': 4.50, '852': 4.45, '1450': 4.56,  # Pé
-    '1425': 9.63, '750': 9.63,  # Ponta
-    '851': 12.48, '1449': 13.18, '1429': 13.18, '748': 11.5  # Rabo
+    '700': 22.10,  # Big bacon
+    '845': 16.09, '809': 16.09, '1452': 16.09, '1428': 16.09,  # Paleta
+    '1446': 13.13, '755': 13.13, '848': 13.13, '1433': 13.13, '1095': 13.13,  # Costela
+    '1448': 7.91, '817': 7.91, '849': 7.91, '1430': 7.91,  # Lingua
+    '846': 15.75, '878': 15.75, '1432': 15.75, '1451': 15.75,  # Lombo  
+    '1426': 3.65, '1447': 3.65, '850': 3.65, '746': 3.65,  # Orelha
+    '1427': 4.79, '836': 4.79, '852': 4.79, '1450': 4.79,  # Pé
+    '1425': 9.14, '750': 9.14,  # Ponta
+    '851': 12.97, '1449': 12.97, '1429': 12.97, '748': 12.97  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -45,9 +45,9 @@ produtos_verificar_nao_encontrados = {
     '3070': 24.65, '1303': 11.9, '925': 9.9, '2989': 7.2, '2082': 4.3,
     '2981': 33, '8599': 22, '3031': 8.97, '6667': 43.5, '865': 9.98,
     '1039': 4.2, '2087': 26, '1501': 11.7, '3026': 31, '3021': 34.26,
-    '2094': 29.9, '3003': 41.9, '3004': 7.21, '3002': 29.9, '7072': 40.52,
+    '2094': 29.9, '3003': 41.9, '3004': 7.21, '3002': 29.9,
     '3097': 2.5, '3098': 4.5, '1669': 7.5, '2056': 5.58, '3016': 3.9, 
-    '2424': 26.99, '2198': 15.5, '1479': 13.3,
+    '2424': 26.99, '2198': 15.5, '7002': 43.5, '3040': 37,
 }
 
 # Juntando todos os valores de referência
