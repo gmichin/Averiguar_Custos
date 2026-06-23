@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Junho\ev120626.csv"
-xlsx_path = r"Y:\hor\arquivos\mario\CONTROL E DE NOTAS ATUALIZADO ATUAL.xlsx"
+csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Junho\ev220626.csv"
+xlsx_path = r"Y:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
@@ -16,13 +16,13 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 produtos_especiais_originais = {
     '700': 22.74,  # Big bacon
     '845': 16.10, '809': 16.10, '1452': 16.10, '1428': 16.10,  # Paleta
-    '1446': 13.11, '755': 12.22, '848': 13.11, '1433': 13.11, '1095': 12.40,  # Costela
-    '1448': 6.6, '817': 5.5, '849': 6.6, '1430': 6.6,  # Lingua
-    '846': 16.02, '878': 13.02, '1432': 16.02, '1451': 16.02,  # Lombo  
-    '1426': 3.82, '1447': 3.82, '850': 3.82, '746': 3.67,  # Orelha
-    '1427': 4.04, '836': 4.50, '852': 4.04, '1450': 4.04,  # Pé
-    '1425': 9.09, '750': 9.19,  # Ponta
-    '851': 12.55, '1449': 12.55, '1429': 12.55, '748': 12.11  # Rabo
+    '1446': 13.11, '755': 12.39, '848': 11.70, '1433': 13.11, '1095': 12.40,  # Costela
+    '1448': 6.6, '817': 5.5, '849': 5.5, '1430': 6.6,  # Lingua
+    '846': 13.00, '878': 13.02, '1432': 16.02, '1451': 16.02,  # Lombo  
+    '1426': 3.82, '1447': 3.82, '850': 3.64, '746': 3.67,  # Orelha
+    '1427': 4.04, '836': 4.50, '852': 4.50, '1450': 4.50,  # Pé
+    '1425': 9.09, '750': 9.41,  # Ponta
+    '851': 12.08, '1449': 12.55, '1429': 12.55, '748': 12.07  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -30,7 +30,7 @@ produtos_verificar_nao_encontrados = {
     '1721': 11.8, '1844': 23.43, '1833': 19.5, '1639': 20.55, '6666': 27,
     '1690': 15.25, '1816': 11.98, '1766': 23.2,
     '1856': 12, '1720': 24.33, '1817': 13, '1945': 6.99, '2055': 4.5,
-    '1177': 13, '1750': 3.83, '1484': 19.76, '1788': 18.36, '2031': 5.5,
+    '1177': 13, '1750': 3.83, '1484': 19.76, '17    88': 18.36, '2031': 5.5,
     '1179': 17, '1673': 25.7, '1546': 10.33, '2030': 5.51, '2083': 15.5,
     '1881': 14.7, '1211': 42.43, '1713': 19.99, '1131': 42.26, '3099': 4.5, 
     '1893': 30.9, '807': 16.80, '1667': 6.98, '1873': 7.9, '2034': 14,
@@ -51,7 +51,7 @@ produtos_verificar_nao_encontrados = {
     '3088': 6.26, '3085': 5.22, '3086': 3.5, '3091': 2.4, '1654': 41,
     '1090': 8.5, '3027': 8.7, '4000': 12.5, '4002': 14, '4031': 17.5,
     '2070': 69, '3061': 18.00, '4035': 16.65, '3059': 27, '4032': 7.5,
-    '4029': 17, '4557': 14.12, '2930': 28.58,
+    '4029': 17, '4557': 14.12, '2930': 28.58, '4014': 74,
     }
 
 # Juntando todos os valores de referência
@@ -218,4 +218,4 @@ print("\nResumo:")
 print(f"Produtos com custos iguais: {len(tabela1)}")
 print(f"Produtos com custos diferentes: {len(tabela2)}")
 print(f"Produtos não encontrados: {len(tabela3)}")
-print(f"Total de produtos processados: {len(result)}")
+print(f"Total de produtos processados: {len(result)}")  
