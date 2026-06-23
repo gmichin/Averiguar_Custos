@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Junho\ev220626.csv"
-xlsx_path = r"Y:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
+csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Junho\ev230626.csv"
+xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
@@ -14,12 +14,12 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-    '700': 22.74,  # Big bacon
+    '700': 22.73,  # Big bacon
     '845': 16.10, '809': 16.10, '1452': 16.10, '1428': 16.10,  # Paleta
     '1446': 13.11, '755': 12.39, '848': 11.70, '1433': 13.11, '1095': 12.40,  # Costela
     '1448': 6.6, '817': 5.5, '849': 5.5, '1430': 6.6,  # Lingua
     '846': 13.00, '878': 13.02, '1432': 16.02, '1451': 16.02,  # Lombo  
-    '1426': 3.82, '1447': 3.82, '850': 3.64, '746': 3.67,  # Orelha
+    '1426': 3.82, '1447': 3.82, '850': 3.64, '746': 3.65,  # Orelha
     '1427': 4.04, '836': 4.50, '852': 4.50, '1450': 4.50,  # Pé
     '1425': 9.09, '750': 9.41,  # Ponta
     '851': 12.08, '1449': 12.55, '1429': 12.55, '748': 12.07  # Rabo
@@ -49,9 +49,9 @@ produtos_verificar_nao_encontrados = {
     '3097': 2.5, '3098': 4.5, '1669': 7.5, '2056': 5.58, '3016': 3.9, 
     '2198': 16.96, '7002': 43.5, '3040': 37, '3040': 37, '3087': 6.26, 
     '3088': 6.26, '3085': 5.22, '3086': 3.5, '3091': 2.4, '1654': 41,
-    '1090': 8.5, '3027': 8.7, '4000': 12.5, '4002': 14, '4031': 17.5,
-    '2070': 69, '3061': 18.00, '4035': 16.65, '3059': 27, '4032': 7.5,
-    '4029': 17, '4557': 14.12, '2930': 28.58, '4014': 74,
+    '1090': 8.88, '3027': 8.7, '4000': 12.5, '4002': 14, '4031': 17.5,
+    '3061': 18.00, '4032': 7.5, '4019': 32, '4018': 33.5, '4020': 16, 
+    '4029': 17, '4557': 14.12, '4014': 74, 
     }
 
 # Juntando todos os valores de referência
