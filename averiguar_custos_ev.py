@@ -14,6 +14,7 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
+
     '700': 22.74,  # Big bacon
     '845': 14.22    , '809': 16.10, '1452': 16.10, '1428': 16.10,  # Paleta
     '1446': 13.11, '755': 12.46 , '848': 13, '1433': 13.11, '1095': 12.40,  # Costela
@@ -53,6 +54,7 @@ produtos_verificar_nao_encontrados = {
     '2070': 69, '3061': 18.00, '4035': 16.65, '3059': 27, '4032': 7.5,
     '4029': 17, '4557': 14.12, '2930': 28.58, '4014': 74, '4021': 9,   
     '4022': 10, '1298': 14, '4030': 32, '4033': 26.5, '1638': 13.36,
+
     }
 
 # Juntando todos os valores de referência
