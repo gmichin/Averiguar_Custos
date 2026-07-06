@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Junho\ev300626.csv"
-xlsx_path = r"Y:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
+csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Julho\ev040726.csv"
+xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
 # Lendo e preparando o arquivo CSV
@@ -14,16 +14,15 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-
     '700': 22.74,  # Big bacon
-    '845': 14.22    , '809': 16.10, '1452': 16.10, '1428': 16.10,  # Paleta
-    '1446': 13.11, '755': 12.46 , '848': 13, '1433': 13.11, '1095': 12.40,  # Costela
-    '1448': 6.6, '817': 5.5, '849': 5.5, '1430': 6.6,  # Lingua
-    '846': 13.33, '878': 13.02, '1432': 16.02, '1451': 16.02,  # Lombo  
-    '1426': 3.82, '1447': 3.82, '850': 3.82, '746': 3.67,  # Orelha
-    '1427': 4.50, '836': 4.50, '852': 5.47, '1450': 4.50,  # Pé
-    '1425': 9.09, '750': 9.41,  # Ponta
-    '851': 12.01, '1449': 12.55, '1429': 12.55, '748': 12.07  # Rabo    
+    '845': 13.84, '809': 13.84, '1452': 13.84, '1428': 13.84,  # Paleta
+    '1446': 11.65, '755': 11.65, '848': 11.65, '1433': 11.65, '1095': 11.65,  # Costela
+    '1448': 7.29, '817': 7.29, '849': 7.29, '1430': 7.29,  # Lingua
+    '846': 16.01, '878': 16.01, '1432': 16.01, '1451': 16.01,  # Lombo  
+    '1426': 3.85, '1447': 3.85, '850': 3.85, '746': 3.85,  # Orelha
+    '1427': 5.57, '836': 5.57, '852': 5.57, '1450': 5.57,  # Pé
+    '1425': 9.20, '750': 9.20,  # Ponta
+    '851': 12.63, '1449': 12.63, '1429': 12.63, '748': 12.63  # Rabo    
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -54,7 +53,6 @@ produtos_verificar_nao_encontrados = {
     '2070': 69, '3061': 18.00, '4035': 16.65, '3059': 27, '4032': 7.5,
     '4029': 17, '4557': 14.12, '2930': 28.58, '4014': 74, '4021': 9,   
     '4022': 10, '1298': 14, '4030': 32, '4033': 26.5, '1638': 13.36,
-
     }
 
 # Juntando todos os valores de referência
