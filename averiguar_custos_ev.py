@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Julho\ev140726.csv"
+csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Julho\ev150726.csv"
 xlsx_path = r"Y:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -22,7 +22,7 @@ produtos_especiais_originais = {
     '1426': 3.85, '1447': 3.85, '850': 4.11, '746': 4.08,  # Orelha
     '1427': 5.57, '836': 5.57, '852': 5.52, '1450': 5.57,  # Pé
     '1425': 9.20, '750': 9.34,  # Ponta
-    '851': 12.06, '1449': 12.63, '1429': 12.63, '748': 12.14  # Rabo     
+    '851': 12.06, '1449': 12.63, '1429': 12.63, '748': 12.02  # Rabo     
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -63,7 +63,7 @@ produtos_verificar_nao_encontrados = {
     '1090': 8.88, '3027': 8.7, '4000': 12.5, '4031': 17.5, '1638': 13.36,
     '4035': 16.65, '4032': 7.5, '4038': 6.48, '1298': 14, '4040': 25,
     '4029': 17, '4557': 14.12, '2930': 28.58, '4014': 74, '4022': 10, 
-    '4044': 14.50,
+    '4044': 14.50, '1388': 31.5, '1089': 12,
     }
 
 # Juntando todos os valores de referência
