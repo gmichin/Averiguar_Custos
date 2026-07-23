@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Julho\ev210726.csv"
+csv_path = r"C:\Users\DELL\VOG\AD - Documentos\Custos Médios\2026\Julho\ev220726.csv"
 xlsx_path = r"Y:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
