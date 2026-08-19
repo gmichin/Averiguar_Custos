@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Agosto\ev180826.csv"
+csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Agosto\ev190826.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -15,14 +15,14 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
     '700': 22.13,  # Big bacon
-    '845': 10, '809': 11.69, '1452': 11.69, '1428': 11.69,  # Paleta
-    '1446': 13.65, '755': 12.24, '848': 12.84, '1433': 13.65, '1095': 13.65,  # Costela
+    '845': 10, '809': 10.42, '1452': 11.69, '1428': 11.69,  # Paleta
+    '1446': 13.65, '755': 12.29, '848': 12.37, '1433': 13.65, '1095': 13.65,  # Costela
     '1448': 7.29, '817': 5.3, '849': 5.55, '1430': 7.29,  # Lingua
     '846': 15.97, '878': 15.97, '1432': 15.97, '1451': 15.97,  # Lombo
-    '1426': 3.84, '1447': 3.84, '850': 3.84, '746': 3.84,  # Orelha
-    '1427': 5.68, '836': 5.68, '852': 5.53, '1450': 5.68,  # Pé
+    '1426': 3.84, '1447': 3.84, '850': 3.76, '746': 3.67,  # Orelha
+    '1427': 5.68, '836': 5.68, '852': 5.1, '1450': 5.68,  # Pé
     '1425': 9.20, '750': 9.20,  # Ponta
-    '851': 13, '1449': 13, '1429': 13, '748': 12.97  # Rabo
+    '851': 13, '1449': 13, '1429': 13, '748': 12.23  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -43,7 +43,7 @@ produtos_verificar_nao_encontrados = {
     '1444': 20, '1335': 26.5, '1218': 30.5, '198': 17, '906': 10.8, 
     '902': 9.9, '1927': 51.30, '1265': 26.30, '1708': 1.99, '1282': 8.9,
     '3070': 24.65, '1303': 11.9, '925': 9.5, '2989': 7.2, '2082': 4.3,
-    '2981': 33, '8599': 22, '3031': 8.97, '6667': 43.5,   
+    '2981': 33, '8599': 22, '3031': 8.97, '6667': 43.5,
     '1039': 4.2, '2087': 26, '1501': 11.7, '3026': 31, '3021': 34.26,
     '2094': 29.9, '3003': 41.9, '3004': 7.21, '3002': 29.9, '3089': 2.1, 
     '3097': 2.5, '3098': 4.5, '1669': 7.5, '2056': 5.58, '4078': 12,
