@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Agosto\ev280826.csv"
+csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Agosto\ev310826.csv"
 xlsx_path = r"S:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -14,15 +14,15 @@ df_csv['CUSTO'] = pd.to_numeric(df_csv['CUSTO'].str.replace(',', '.'), errors='c
 
 # Lista de produtos com valores de referência especiais (originais)
 produtos_especiais_originais = {
-    '700': 22.7,  # Big bacon
-    '845': 9.42, '809': 9.49, '1452': 11.69, '1428': 11.69,  # Paleta
-    '1446': 13.65, '755': 12.29, '848': 12.35, '1433': 13.65, '1095': 13.65,  # Costela
-    '1448': 7.29, '817': 5.3, '849': 5.38, '1430': 7.29,  # Lingua
-    '846': 15.02, '878': 13.54, '1432': 15.97, '1451': 15.97,  # Lombo
-    '1426': 3.84, '1447': 3.84, '850': 3.72, '746': 3.65,  # Orelha
-    '1427': 5.68, '836': 5, '852': 5.1, '1450': 5.27,  # Pé
-    '1425': 9.20, '750': 7.87,  # Ponta
-    '851': 13.08, '1449':    13, '1429': 13, '748': 12.23  # Rabo
+    '700': 21.97,  # Big bacon
+    '845': 11.69, '809': 11.69, '1452': 11.69, '1428': 11.69,  # Paleta
+    '1446': 11.19, '755': 11.19, '848': 11.19, '1433': 11.19, '1095': 11.19,  # Costela
+    '1448': 7.28, '817': 7.28, '849': 7.28, '1430': 7.28,  # Lingua
+    '846': 15.40, '878': 15.40, '1432': 15.40, '1451': 15.40,  # Lombo
+    '1426': 3.87, '1447': 3.87, '850': 3.87, '746': 3.87,  # Orelha
+    '1427': 5.52, '836': 5.52, '852': 5.52, '1450': 5.52,  # Pé
+    '1425': 9.20, '750': 9.20,  # Ponta
+    '851': 13.20, '1449': 13.20, '1429': 13.20, '748': 13.20  # Rabo
 }
 
 # Lista de produtos para verificação em "Não Encontrados"
@@ -59,7 +59,7 @@ produtos_verificar_nao_encontrados = {
     '4035': 16.65, '4032': 7.5, '1298': 14, '4040': 25, '4084': 31,
     '4029': 17, '4557': 14.12, '1859': 11.15, '758': 6.8, '757': 7.2,
     '4023': 53.99, '1063': 14.84, '4051': 21.3, '4054': 32, '4057': 71,
-    '2521': 11.84, '4071': 9.07, '4072': 14.09,
+    '2521': 11.84, '4071': 9.07, '4072': 15.6,
     '4075': 9.8,
     }
 
