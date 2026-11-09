@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 
 # Definindo os caminhos dos arquivos
-csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Novembro\ev041126.csv"
+csv_path = r"C:\Users\win11\VOG\AD - Documentos\Custos Médios\2026\Novembro\ev091126.csv"
 xlsx_path = r"Z:\hor\arquivos\mario\CONTROLE DE NOTAS ATUALIZADO ATUAL.xlsx"
 output_path = str(Path.home() / "Downloads" / "Averiguar_Custos (EV x NOTA).xlsx")
 
@@ -78,8 +78,9 @@ produtos_verificar_nao_encontrados = {
     '5067': 7.07, '4191': 26.5, '4106': 29.5, '7000': 11, '7005': 17.5,
     '7006': 16, '4200': 33, '7004': 8.9, '7003': 8, '4150': 4.99,
     '1670': 11, '1710': 4.63, '4301': 9, '1445': 14, '8065': 2.5,
-    '4083': 19, '4300': 14.8, '7007': 15, '4302': 9.5,
-    '865': 9.98, '7008': 12.8
+    '4083': 19, '4300': 14.8, '7007': 15, '4302': 9.5, '1175': 9.5,
+    '865': 9.98, '7008': 12.8, '2019': 10.5, '1312': 38, '7009': 19.04,
+    '7011': 63.49
     }
 
 # Juntando todos os valores de referência
